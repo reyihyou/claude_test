@@ -1,5 +1,5 @@
 ---
-name: Code Commenter
+name: code-commenter
 description: 当用户要求"添加注释"、"代码注释"或"注释代码"时，自动为代码添加清晰的中文注释
 ---
 
