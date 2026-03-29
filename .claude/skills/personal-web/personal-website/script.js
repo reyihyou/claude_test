@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const knowledgeBase = {
         '你现在在做什么？': '我最近在搭建自己的个人主页，整理作品集，同时也在学习如何更好地应用AI工具来提升内容创作的效率和质量。',
         '你有哪些作品？': '我主要专注于内容策划和AI应用领域，目前有几个代表性作品：1) AI内容创作指南 - 帮助创作者用AI工具提升效率；2) 知识整理方法论 - 系统化的知识管理工作流；3) 个人品牌搭建案例 - 从0到1的内容策略。你可以在左侧的"作品展示"区域看到更多细节。',
-        '怎么联系你？': '你可以通过以下方式联系我：<br>1. <strong>GitHub</strong>: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a><br>2. <strong>LinkedIn</strong>: <a href="https://linkedin.com/in/yourusername" target="_blank">linkedin.com/in/yourusername</a><br>3. <strong>Twitter</strong>: <a href="https://twitter.com/yourusername" target="_blank">twitter.com/yourusername</a><br>4. <strong>Email</strong>: <a href="mailto:your.email@example.com">your.email@example.com</a><br><br>请将链接中的"yourusername"替换为实际的用户名。我通常会在1-2个工作日内回复。',
+        '怎么联系你？': '你可以通过以下方式联系我：<br>1. <strong>GitHub</strong>: <a href="https://github.com/reyihyou" target="_blank">github.com/reyihyou</a><br>2. <strong>Email</strong>: <a href="mailto:71547214@qq.com">71547214@qq.com</a><br>3. <strong>QQ</strong>: <a href="https://wpa.qq.com/msgrd?v=3&uin=71547214&site=qq&menu=yes" target="_blank">71547214</a><br><br>我通常会在1-2个工作日内回复。',
         '你是谁？': '我是冷冰的数字分身。冷冰是一个正在学习用AI做产品的内容策划，擅长内容表达、AI应用和知识整理。',
         '你的职业是什么？': '我是一名内容策划，专注于将复杂的信息转化为易懂的内容，并探索AI在内容创作中的应用。',
         '你擅长什么？': '我擅长内容表达、AI应用和知识整理。特别喜欢把复杂问题讲成人话，让专业知识更容易被理解。',
