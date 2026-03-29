@@ -476,3 +476,63 @@ body {
 .bot-message .message-content a:hover {
     color: #2563eb;
 }
+
+/* 加载状态 */
+.loading .message-content {
+    background-color: #f0f9ff !important;
+    border-color: #bae6fd !important;
+}
+
+.loading .fa-spinner {
+    color: #3b82f6;
+    margin-right: 8px;
+}
+
+/* 错误消息 */
+.error-message .message-content {
+    background-color: #fef2f2 !important;
+    border-color: #fecaca !important;
+}
+
+.error-message .fa-exclamation-triangle {
+    color: #dc2626;
+    margin-right: 8px;
+}
+
+.error-hint {
+    font-size: 0.9rem;
+    color: #7c3aed;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+/* 聊天消息中的HTML内容 */
+.message-content p,
+.message-content ul,
+.message-content ol,
+.message-content li,
+.message-content strong,
+.message-content em {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.message-content ul,
+.message-content ol {
+    margin-left: 20px;
+    margin-bottom: 12px;
+}
+
+.message-content li {
+    margin-bottom: 4px;
+}
+
+.message-content strong {
+    color: #1e3a8a;
+    font-weight: 600;
+}
+
+.message-content em {
+    font-style: italic;
+    color: #4b5563;
+}

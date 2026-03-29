@@ -16,9 +16,14 @@
 personal-website/
 ├── index.html          # 主页面
 ├── style.css           # 样式文件
-├── script.js           # 聊天功能JavaScript
+├── script.js           # 聊天功能JavaScript（支持AI+本地双模式）
 ├── avatar.svg          # 头像图像
-└── README.md           # 说明文档
+├── README.md           # 说明文档
+└── backend/            # DeepSeek API代理服务
+    ├── server.js       # Express后端服务器
+    ├── package.json    # Node.js依赖配置
+    ├── .env.example    # 环境变量示例
+    └── README.md       # 后端使用说明
 ```
 
 ## 如何预览
@@ -46,8 +51,10 @@ python -m http.server 8000
    - 打字机效果的聊天回复
 4. **聊天功能**：
    - 预定义问题建议按钮
-   - 智能回答匹配
+   - DeepSeek大模型智能对话（需启动后端服务）
+   - 本地知识库备份（后端不可用时自动切换）
    - 打字动画效果
+   - 加载状态和错误提示
 
 ## 聊天功能知识库
 
@@ -66,9 +73,60 @@ python -m http.server 8000
 - Safari 12+
 - Edge 79+
 
+## AI聊天功能集成
+
+现在支持真实的DeepSeek大模型聊天功能！
+
+### 后端服务配置
+
+项目包含一个Node.js后端服务，位于 `backend/` 目录，用于安全调用DeepSeek API：
+
+```
+backend/
+├── server.js           # Express后端服务器
+├── package.json        # Node.js依赖配置
+├── .env.example        # 环境变量示例
+└── README.md           # 后端使用说明
+```
+
+### 启动完整服务
+
+1. **启动后端服务**：
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+   服务将在 `http://localhost:3000` 启动
+
+2. **启动前端服务**：
+   ```bash
+   python -m http.server 8000
+   ```
+
+3. **访问页面**：
+   - 打开 `http://localhost:8000`
+   - 聊天功能将自动连接后端AI服务
+
+### 功能特点
+
+- **真实AI对话**：基于DeepSeek大模型的智能回复
+- **安全架构**：API密钥在后端保护，不暴露在前端
+- **智能降级**：后端不可用时自动切换至本地知识库
+- **加载状态**：显示"思考中..."动画
+- **错误处理**：友好的错误提示和恢复机制
+
+### 系统提示词
+
+AI使用预定义的系统提示词，确保以冷冰的数字分身身份回答，包含：
+- 个人基本信息
+- 职业背景和擅长领域
+- 回答风格要求
+- 对话指导原则
+
 ## 未来扩展建议
 
-1. 添加真实的后端API支持更智能的聊天
+1. 添加对话历史管理
 2. 集成社交媒体动态
 3. 添加博客或文章板块
 4. 多语言支持
@@ -76,10 +134,16 @@ python -m http.server 8000
 
 ## 技术栈
 
+### 前端
 - HTML5
 - CSS3（Flexbox、Grid、CSS变量）
 - 纯JavaScript（无框架依赖）
 - SVG图形
+
+### 后端（可选，用于AI聊天）
+- Node.js + Express
+- Axios（HTTP客户端）
+- DeepSeek API
 
 ## 作者
 
