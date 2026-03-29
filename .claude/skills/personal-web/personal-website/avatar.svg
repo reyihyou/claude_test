@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2563eb" />
+            <stop offset="100%" stop-color="#1e3a8a" />
+        </linearGradient>
+    </defs>
+
+    <circle cx="50" cy="50" r="48" fill="url(#gradient)" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- 脸型 -->
+    <circle cx="50" cy="50" r="32" fill="#f0f9ff"/>
+
+    <!-- 眼睛 -->
+    <circle cx="38" cy="45" r="4" fill="#1e3a8a"/>
+    <circle cx="62" cy="45" r="4" fill="#1e3a8a"/>
+
+    <!-- 眼镜 -->
+    <ellipse cx="38" cy="45" rx="6" ry="5" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <ellipse cx="62" cy="45" rx="6" ry="5" fill="none" stroke="#3b82f6" stroke-width="1.5"/>
+    <line x1="44" y1="45" x2="56" y2="45" stroke="#3b82f6" stroke-width="1.5"/>
+
+    <!-- 微笑 -->
+    <path d="M 40,60 Q 50,70 60,60" fill="none" stroke="#1e3a8a" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- 头发 -->
+    <path d="M 30,25 Q 35,15 40,20 Q 45,15 50,22 Q 55,15 60,20 Q 65,15 70,25" fill="none" stroke="#1e3a8a" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- 科技感装饰 -->
+    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(59, 130, 246, 0.2)" stroke-width="1" stroke-dasharray="5,5"/>
+    <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(30, 58, 138, 0.1)" stroke-width="1"/>
+
+    <!-- 点缀 -->
+    <circle cx="25" cy="30" r="2" fill="#3b82f6" opacity="0.6">
+        <animate attributeName="opacity" values="0.3;0.7;0.3" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="75" cy="30" r="2" fill="#3b82f6" opacity="0.6">
+        <animate attributeName="opacity" values="0.7;0.3;0.7" dur="2s" repeatCount="indefinite"/>
+    </circle>
+</svg>

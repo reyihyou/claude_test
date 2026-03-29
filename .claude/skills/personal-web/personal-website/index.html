@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>冷冰 - 个人主页</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- 头部区域 -->
+        <header class="header">
+            <div class="avatar-container">
+                <img src="avatar.svg" alt="冷冰的头像" class="avatar">
+            </div>
+            <div class="header-content">
+                <h1 class="name">冷冰</h1>
+                <p class="tagline">一个正在学习用 AI 做产品的内容策划</p>
+                <div class="social-links">
+                    <a href="https://github.com/yourusername" target="_blank" class="social-link" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://linkedin.com/in/yourusername" target="_blank" class="social-link" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://twitter.com/yourusername" target="_blank" class="social-link" title="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="mailto:your.email@example.com" class="social-link" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- 左侧个人信息区 -->
+            <section class="profile-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-user"></i> 关于我</h2>
+                </div>
+                <div class="profile-content">
+                    <div class="info-item">
+                        <h3><i class="fas fa-briefcase"></i> 职业</h3>
+                        <p>内容策划</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-tasks"></i> 近期工作</h3>
+                        <p>搭自己的个人主页，整理作品集</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-star"></i> 擅长领域</h3>
+                        <p>内容表达、AI 应用、知识整理</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-heart"></i> 兴趣</h3>
+                        <p>AI 应用、写作、旅行</p>
+                    </div>
+                    <div class="info-item">
+                        <h3><i class="fas fa-lightbulb"></i> 个人特点</h3>
+                        <p>喜欢把复杂问题讲成人话</p>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2><i class="fas fa-images"></i> 作品展示</h2>
+                </div>
+                <div class="portfolio-content">
+                    <div class="portfolio-item">
+                        <h3>AI 内容创作指南</h3>
+                        <p>一份关于如何用 AI 工具提升内容创作效率的指南</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <h3>知识整理方法论</h3>
+                        <p>系统化的知识整理和工作流优化方案</p>
+                    </div>
+                    <div class="portfolio-item">
+                        <h3>个人品牌搭建案例</h3>
+                        <p>从 0 到 1 搭建个人品牌的内容策略</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧聊天区 -->
+            <section class="chat-section">
+                <div class="section-header">
+                    <h2><i class="fas fa-robot"></i> 数字分身聊天区</h2>
+                    <p class="subtitle">我是冷冰的数字分身，可以回答关于我的问题</p>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- 初始消息 -->
+                        <div class="message bot-message">
+                            <div class="message-content">
+                                <p>你好！我是冷冰的数字分身。我可以回答关于冷冰的问题，比如：</p>
+                                <ul>
+                                    <li>他现在在做什么？</li>
+                                    <li>他有哪些作品？</li>
+                                    <li>怎么联系他？</li>
+                                </ul>
+                                <p>你可以问我任何关于冷冰的问题！</p>
+                            </div>
+                            <div class="message-time">现在</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <div class="suggested-questions">
+                            <p>试试问我：</p>
+                            <button class="suggested-btn" data-question="你现在在做什么？">你现在在做什么？</button>
+                            <button class="suggested-btn" data-question="你有哪些作品？">你有哪些作品？</button>
+                            <button class="suggested-btn" data-question="怎么联系你？">怎么联系你？</button>
+                        </div>
+
+                        <div class="input-container">
+                            <input type="text" id="message-input" placeholder="输入你想问的问题...">
+                            <button id="send-button"><i class="fas fa-paper-plane"></i> 发送</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>© 2024 冷冰的个人主页 | 简约 · 清爽 · 科技感</p>
+            <p class="footer-note">这个页面是响应式设计，在手机和电脑上都能良好显示</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
