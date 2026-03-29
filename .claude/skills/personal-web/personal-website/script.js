@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const sendButton = document.getElementById('send-button');
     const suggestedButtons = document.querySelectorAll('.suggested-btn');
 
-    // 后端API配置
-    const API_BASE_URL = 'http://localhost:3000/api';
+    // 后端API配置 - 动态使用当前主机名，便于局域网访问
+    const API_BASE_URL = `http://${window.location.hostname}:3000/api`;
     const CHAT_ENDPOINT = `${API_BASE_URL}/chat`;
     const HEALTH_ENDPOINT = `${API_BASE_URL}/health`;
 

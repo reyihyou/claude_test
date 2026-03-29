@@ -8,8 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 // 中间件
 app.use(cors({
-    origin: ['http://localhost:8000', 'http://127.0.0.1:8000', 'http://localhost:5500', 'http://127.0.0.1:5500'],
-    credentials: true
+    origin: '*' // 允许所有来源，便于局域网测试
 }));
 app.use(express.json());
 
