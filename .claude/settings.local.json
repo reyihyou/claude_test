@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(netstat -ano)",
+      "Bash(findstr :3000)",
+      "Bash(tasklist /FI \"PID eq 4392\")",
+      "Bash(tasklist)",
+      "Bash(findstr 4392)",
+      "Bash(findstr :8000)"
     ]
   }
 }
