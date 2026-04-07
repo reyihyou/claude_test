@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const CHAT_ENDPOINT = `${API_BASE_URL}/chat`;
     const HEALTH_ENDPOINT = `${API_BASE_URL}/health`;
 
+    // 状态标志
+    let isProcessing = false; // 防止同时处理多个AI回复
+
     // 本地知识库：作为后端不可用时的备用
     const knowledgeBase = {
         '你现在在做什么？': '我最近在搭建自己的个人主页，整理作品集，同时也在学习如何更好地应用AI工具来提升内容创作的效率和质量。',
@@ -29,8 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
         'default': '这是一个好问题！不过我的知识主要聚焦在冷冰的个人信息和工作方面。你可以问我关于他工作、作品、兴趣或联系方式的问题。试试问："你现在在做什么？"或"你有哪些作品？"'
     };
 
+    // 启用/禁用输入控件
+    function setInputEnabled(enabled) {
+        messageInput.disabled = !enabled;
+        sendButton.disabled = !enabled;
+        messageInput.placeholder = enabled ? '输入你想问的问题...' : '正在处理中，请稍候...';
+        console.log(`setInputEnabled: ${enabled}`);
+    }
+
     // 添加消息到聊天窗口
     function addMessage(text, isUser = false) {
+        console.log(`addMessage: "${text.substring(0, 30)}..." isUser=${isUser}, children before: ${chatMessages.children.length}`);
+
         const messageDiv = document.createElement('div');
         messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
 
@@ -46,12 +59,17 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="message-time">${time}</div>
         `;
 
+        // 确保添加到聊天消息容器的末尾
         chatMessages.appendChild(messageDiv);
+        console.log(`addMessage: appended, children after: ${chatMessages.children.length}, last child is user: ${chatMessages.lastChild.classList.contains('user-message')}`);
+
         // 滚动到底部
         chatMessages.scrollTop = chatMessages.scrollHeight;
 
         // 如果是用户消息，稍后调用AI回复
         if (isUser) {
+            // 立即禁用输入，防止在AI处理期间发送新消息
+            setInputEnabled(false);
             setTimeout(() => {
                 getAIResponse(text);
             }, 500);
@@ -60,9 +78,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 显示加载状态
     function showLoading() {
+        console.log(`showLoading: children before: ${chatMessages.children.length}, isProcessing=${isProcessing}`);
+        // 先移除任何现有的加载消息
+        hideLoading();
+
         const loadingDiv = document.createElement('div');
         loadingDiv.className = 'message bot-message loading';
-        loadingDiv.id = 'loading-message';
+        loadingDiv.setAttribute('data-loading', 'true');
 
         loadingDiv.innerHTML = `
             <div class="message-content">
@@ -72,15 +94,18 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
 
         chatMessages.appendChild(loadingDiv);
+        console.log(`showLoading: appended loading, children after: ${chatMessages.children.length}`);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     // 隐藏加载状态
     function hideLoading() {
-        const loadingMsg = document.getElementById('loading-message');
-        if (loadingMsg) {
-            loadingMsg.remove();
-        }
+        const loadingMessages = chatMessages.querySelectorAll('[data-loading="true"]');
+        console.log(`hideLoading: removing ${loadingMessages.length} loading messages`);
+        loadingMessages.forEach(msg => {
+            console.log(`hideLoading: removing loading message at index ${Array.from(chatMessages.children).indexOf(msg)}`);
+            msg.remove();
+        });
     }
 
     // 显示错误消息
@@ -104,10 +129,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 调用DeepSeek API获取AI回复
     async function getAIResponse(question) {
+        console.log(`getAIResponse: question="${question.substring(0, 30)}...", isProcessing=${isProcessing}`);
+
+        // 检查是否正在处理其他请求
+        if (isProcessing) {
+            console.warn('已在处理请求，跳过新请求');
+            return;
+        }
+
+        // 设置处理标志
+        isProcessing = true;
+        console.log(`getAIResponse: set isProcessing=true`);
+
         // 先显示加载状态
         showLoading();
 
         try {
+            console.log(`getAIResponse: fetching from ${CHAT_ENDPOINT}`);
             const response = await fetch(CHAT_ENDPOINT, {
                 method: 'POST',
                 headers: {
@@ -124,6 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.success && data.response) {
                 // 成功获取AI回复
+                console.log(`getAIResponse: success, response length=${data.response.length}`);
                 hideLoading();
                 displayResponse(data.response);
             } else {
@@ -141,6 +180,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideLoading();
                 getLocalResponse(question);
             }, 1000);
+
+            // 注意：不在finally块中设置isProcessing=false，因为我们需要等待getLocalResponse完成
+            // getLocalResponse会调用displayResponse，它会在打字机效果完成后设置isProcessing=false
         }
     }
 
@@ -169,12 +211,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 显示回复（带打字机效果）
     function displayResponse(response) {
+        const responseId = Date.now() + Math.random().toString(36).substr(2, 5);
+        console.log(`displayResponse [${responseId}]: response length=${response.length}, children before: ${chatMessages.children.length}, isProcessing=${isProcessing}`);
         hideLoading();
 
         let index = 0;
         const typingSpeed = 20; // 毫秒每字符
         const responseDiv = document.createElement('div');
         responseDiv.className = 'message bot-message';
+        responseDiv.setAttribute('data-response-id', responseId);
 
         const time = new Date().toLocaleTimeString('zh-CN', {
             hour: '2-digit',
@@ -183,27 +228,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
         responseDiv.innerHTML = `
             <div class="message-content">
-                <p id="typing-text"></p>
+                <p></p>
             </div>
             <div class="message-time">${time}</div>
         `;
 
         chatMessages.appendChild(responseDiv);
+        console.log(`displayResponse [${responseId}]: appended responseDiv, children after: ${chatMessages.children.length}`);
 
-        const typingText = document.getElementById('typing-text');
+        // 获取刚添加的段落元素
+        const typingParagraph = responseDiv.querySelector('.message-content p');
+        const expectedParentResponseId = responseId;
+        console.log(`displayResponse [${responseId}]: typingParagraph found: ${!!typingParagraph}, parent responseId: ${typingParagraph && typingParagraph.parentElement && typingParagraph.parentElement.parentElement.getAttribute('data-response-id')}`);
 
         function typeWriter() {
+            // 安全检查：确保typingParagraph仍然连接到正确的responseDiv
+            const currentParentResponseId = typingParagraph && typingParagraph.parentElement && typingParagraph.parentElement.parentElement.getAttribute('data-response-id');
+            if (currentParentResponseId !== expectedParentResponseId) {
+                console.error(`typeWriter [${responseId}]: ERROR! typingParagraph moved to wrong parent! expected=${expectedParentResponseId}, actual=${currentParentResponseId}`);
+                isProcessing = false;
+                return;
+            }
+
             if (index < response.length) {
-                typingText.innerHTML += response.charAt(index);
+                console.log(`typeWriter [${responseId}]: adding char "${response.charAt(index)}", current length=${typingParagraph.innerHTML.length}, index=${index}`);
+                typingParagraph.innerHTML += response.charAt(index);
                 index++;
                 setTimeout(typeWriter, typingSpeed);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
+            } else {
+                // 打字效果完成后清除处理标志并重新启用输入
+                console.log(`typeWriter [${responseId}]: completed, setting isProcessing=false, total chars=${response.length}`);
+                isProcessing = false;
+                setInputEnabled(true);
             }
         }
-
-        // 移除旧元素的id（防止重复）
-        typingText.removeAttribute('id');
-        responseDiv.querySelector('.message-content p').id = 'typing-text';
 
         setTimeout(typeWriter, 300);
     }
